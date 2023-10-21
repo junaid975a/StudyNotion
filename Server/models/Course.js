@@ -21,7 +21,7 @@ const courseSchema = new mongoose.Schema({
         trim: true,
         required: true,
     },
-    courseContext: [
+    courseContent: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Section",

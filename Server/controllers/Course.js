@@ -88,6 +88,7 @@ exports.createCourse = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Course created successfully",
+            data: newCourse,
         });
     } catch (err) {
         console.log(err);
@@ -125,9 +126,11 @@ exports.showAllCourses = async (req, res) => {
             data: allCourses,
         });
     } catch (err) {
+        console.log(err);
         return res.status(500).json({
             success: false,
-            message: err.message,
+            message: "Cannot fetch courses",
+            error: err.message
         });
     }
 };

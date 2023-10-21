@@ -43,14 +43,14 @@ exports.showAllTags = async (req, res) => {
             { name: true, description: true });
 
         return res.status(200).json({
-            success: false,
+            success: true,
             message: "All Tags returned successfully",
+            data: allTags,
         });
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: err.message,
-            data: allTags,
+            message: err.message,   
         });
     }
 }
