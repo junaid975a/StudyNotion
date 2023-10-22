@@ -38,7 +38,7 @@ exports.createSubSection = async (req, res) => {
                     subSection: subSectionDetails._id,
                 }
             }, 
-            { new: true });
+            { new: true }).populate("subSection");
         // HW: log updated section here after adding populate query
 
         // return res

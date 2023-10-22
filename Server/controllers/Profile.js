@@ -5,11 +5,11 @@ const User = require("../models/User");
 exports.updateProfile = async (req, res) => {
     try {
         // get details
-        const { dateOfBirth = "", about = "", contactNumber, gender } = req.body;
+        const { dateOfBirth = "", about = "", contactNumber } = req.body;
         const id = req.user.id;
 
         // validate
-        if (!contactNumber || !gender || !id) {
+        if (!contactNumber || !id) {
             return res.status(400).json({
                 success: false,
                 message: "All Fields are required",

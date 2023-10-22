@@ -26,7 +26,12 @@ exports.createSeaction = async (req, res) => {
                 }
             },
             { new: true }
-        );
+        ).populate({
+            path: "courseContext",
+            populate: {
+                path: "subSection",
+            },
+        }).exec();
         // TODO: use populate, so that i can show section and subsection
         // return res
         return res.status(200).json({
