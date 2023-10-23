@@ -75,11 +75,11 @@ exports.categoryPageDetails = async (req, res) => {
 		// Get courses for other categories
 		const categoriesExceptSelected = await Category.find({
 			_id: { $ne: categoryId },
-		}).populate("courses");
-		let differentCourses = [];
-		for (const category of categoriesExceptSelected) {
-			differentCourses.push(...category.courses);
-		}
+		}).populate("courses").exec();
+		// let differentCourses = [];
+		// for (const category of categoriesExceptSelected) {
+		// 	differentCourses.push(...category.courses);
+		// }
 
         // Get top-selling courses across all categories
 		const allCategories = await Category.find().populate("courses");
@@ -90,7 +90,7 @@ exports.categoryPageDetails = async (req, res) => {
 
 		res.status(200).json({
 			selectedCourses: selectedCourses,
-			differentCourses: differentCourses,
+			differentCourses: categoriesExceptSelected,
 			mostSellingCourses: mostSellingCourses,
 		});
 
