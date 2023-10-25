@@ -13,6 +13,7 @@ exports.createSubSection = async (req, res) => {
         const video = req.files.videoFile;
 
         // validate data
+        // console.log(sectionId, title, timeDuration, description, video);
         if (!sectionId || !title || !timeDuration || !description || !video) {
             return res.status(400).json({
                 success: false,

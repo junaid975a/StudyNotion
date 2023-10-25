@@ -10,7 +10,7 @@ require("dotenv").config();
 
 
 // otp send
-exports.sendOTP = async (req, res) => {
+exports.sendotp = async (req, res) => {
     try {
         // email nikala from req ki body
         const { email } = req.body;
@@ -56,6 +56,7 @@ exports.sendOTP = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "OTP sent successfully.",
+            otp,
         });
     } catch (err) {
         console.log(err);
@@ -111,14 +112,16 @@ exports.signUp = async (req, res) => {
 
         // find most resent otp for the user
         const recentOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-
+        // console.log("otp: ",otp);
+        // console.log("recent otp: ",recentOtp);
+        // console.log(recentOtp[0].otp);
         // validate otp
         if (recentOtp.length == 0) {
             return res.status(400).json({
                 success: false,
                 message: "OTP not found",
             });
-        } else if (otp !== recentOtp.otp) {
+        } else if (otp !== recentOtp[0].otp) {
             return res.status(400).json({
                 success: false,
                 message: "invalid OTP",
@@ -126,10 +129,10 @@ exports.signUp = async (req, res) => {
         }
 
         // hash password
-        const hashedPassword = await bcrypt.has(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // create user
-        const profileDetails = await Proile.create({
+        const profileDetails = await Profile.create({
             gender: null,
             dateOfBirth: null,
             about: null,
@@ -143,7 +146,6 @@ exports.signUp = async (req, res) => {
             contactNumber,
             password: hashedPassword,
             accountType: accountType,
-            approved: approved,
             additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
         })

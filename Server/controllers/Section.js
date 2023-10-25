@@ -2,7 +2,7 @@ const Section = require("../models/Section");
 const Course = require("../models/Course");
 
 
-exports.createSeaction = async (req, res) => {
+exports.createSection = async (req, res) => {
     try {
         // data fetch
         const { sectionName, courseId } = req.body;
@@ -27,7 +27,7 @@ exports.createSeaction = async (req, res) => {
             },
             { new: true }
         ).populate({
-            path: "courseContext",
+            path: "courseContent",
             populate: {
                 path: "subSection",
             },

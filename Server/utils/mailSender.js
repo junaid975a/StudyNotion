@@ -11,6 +11,8 @@ const mailSender = async (email, title, body) => {
                 pass: process.env.MAIL_PASS,
             }
         });
+        // console.log(body);
+        // console.log(transporter);
 
         // prepare the email and send
         let info = await transporter.sendMail({
@@ -19,7 +21,6 @@ const mailSender = async (email, title, body) => {
             subject: `${title}`,
             html: `${body}`
         });
-        // console.log(info);
 
         return info;
 
