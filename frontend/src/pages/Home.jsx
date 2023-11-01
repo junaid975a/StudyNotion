@@ -158,7 +158,7 @@ const Home = () => {
                                     <FaArrowRight />
                                 </div>
                             </CTAButton>
-                            <CTAButton active={false} linkto={"/signup"}>
+                            <CTAButton active={false} linkto={"/login"}>
                                 <div className="flex items-center gap-3">
                                     Learn more
                                 </div>
