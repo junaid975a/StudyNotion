@@ -35,21 +35,21 @@ exports.resetPasswordToken = async(req, res) => {
         const url = `http://localhost:3000/update-password/${token}`;
         await mailSender(email, 
                             "Password Reset Link", 
-                                `Password Reset Link: ${url}`)
+                                `Password Reset Link: ${url}. Please click this url to reset your password.`)
 
 
         // return res
         return res.status(200).json({
             success: true,
             massage: "Email sent successfully, check you email and change password.",
-            url,
         });
 
     } catch(err) {
         console.log(err)
         return res.status(500).json({
-            success: false,
-            massage: err.message,
+            error: error.message,
+			success: false,
+			message: `Some Error in Sending the Reset Message`,
         });
     }
 }

@@ -85,6 +85,12 @@ exports.signUp = async (req, res) => {
 
         // validate
         if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
+            // console.log(firstName)
+            // console.log(lastName)
+            // console.log(email)
+            // console.log(password)
+            // console.log(confirmPassword)
+            // console.log(otp)
             return res.status(403).json({
                 success: false,
                 massage: "All fields are required.",
