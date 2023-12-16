@@ -54,6 +54,7 @@ const UpdatePassword = () => {
                                         value={password}
                                         onChange={handleOnChange}
                                         placeholder="New Password"
+                                        className="text-richblack-5 w-full p-2 bg-richblack-600"
                                     />
                                     <span onClick={() => setShowPassword((prev) => !prev)}>
                                         {
@@ -70,6 +71,7 @@ const UpdatePassword = () => {
                                         value={confirmPassword}
                                         onChange={handleOnChange}
                                         placeholder="Confirm Password"
+                                        className="text-richblack-5 w-full p-2 bg-richblack-600"
                                     />
                                     <span onClick={() => setShowConfirmPassword((prev) => !prev)}>
                                         {
