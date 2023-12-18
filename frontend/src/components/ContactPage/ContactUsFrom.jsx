@@ -31,8 +31,11 @@ const ContactUsFrom = () => {
         console.log("logging data", data)
         try {
             setLoading(true);
-            // const response = await apiConnector("POST", contactusEndpoint.CONTACT_US_API, data)
-            const response = { status: "OK" };
+            const response = await apiConnector(
+                                        "POST", 
+                                        contactusEndpoint.CONTACT_US_API, 
+                                        data)
+            // const response = { status: "OK" };
             console.log("Logging response..", response);
             setLoading(false);
         } catch (err) {
@@ -41,13 +44,15 @@ const ContactUsFrom = () => {
         }
     }
     return (
-        <form onSubmit={handleSubmit(submitContactFrom)}>
+        <form
+        className="flex flex-col gap-7"
+        onSubmit={handleSubmit(submitContactFrom)}>
 
             {/* Name */}
-            <div className="flex flex-row gap-1 mb-4">
+            <div className="flex flex-col gap-5 lg:flex-row">
                 {/* first name  */}
-                <div className="flex flex-col">
-                    <label htmlFor="firstname">
+                <div className="flex flex-col gap-2 lg:w-[48%]">
+                    <label htmlFor="firstname" className="lable-style">
                         First Name
                     </label>
                     <input type="text"
@@ -55,17 +60,17 @@ const ContactUsFrom = () => {
                         id="firstname"
                         placeholder="Enter First Name"
                         {...register("firstname", { required: true })}
-                        className="text-black" />
+                        className="form-style" />
                     {
                         errors.firstname && (
-                            <span>
-                                Please enter your name
+                            <span className="-mt-1 text-[12px] text-yellow-100">
+                                Please enter your name.
                             </span>
                         )
                     }
                 </div>
-                <div className="flex flex-col">
-                    <label htmlFor="lastname">
+                <div className="flex flex-col gap-2 lg:w-[48%]">
+                    <label htmlFor="lastname" className="lable-style">
                         Last Name
                     </label>
                     <input type="text"
@@ -73,13 +78,13 @@ const ContactUsFrom = () => {
                         id="lastname"
                         placeholder="Enter Last Name"
                         {...register("lastname")}
-                        className="text-black" />
+                        className="form-style" />
                 </div>
             </div>
 
             {/* email */}
-            <div className="flex flex-col gap-1 mb-4">
-                <label htmlFor="email">
+            <div className="flex flex-col gap-2">
+                <label htmlFor="email" className="lable-style">
                     Email Address
                 </label>
                 <input type="email"
@@ -87,10 +92,10 @@ const ContactUsFrom = () => {
                     id="email"
                     placeholder="Enter Email Address"
                     {...register("email", { required: true })}
-                    className="text-black" />
+                    className="form-style" />
                 {
                     errors.email && (
-                        <span>
+                        <span className="-mt-1 text-[12px] text-yellow-100">
                             Please enter your Email
                         </span>
                     )
@@ -98,22 +103,22 @@ const ContactUsFrom = () => {
             </div>
 
             {/* phone number */}
-            <div className="flex flex-col gap-1 mb-4">
-                <label htmlFor="phone">
+            <div className="flex flex-col gap-2">
+                <label htmlFor="phone" className="lable-style">
                     Phone Number
                 </label>
                  
-                <div className="flex gap-2">
+                <div className="flex gap-5">
                     {/* country code dropdown */}
-                    <div className="flex flex-col gap-2 w-[80px] text-black">
+                    <div className="flex w-[81px] flex-col gap-2">
                         <select name="countryCodeDrop" id="countryCodeDrop"
-                            className=""
+                            className="form-style"
                             {...register("countryCode", { required: true })}>
                             {
                                 CountryCode.map((element, index) => {
                                     return (
                                         <option key={index} value={element.code} className="text-black">
-                                            {element.code} - {element.country}
+                                            {element.code} -{element.country}
                                         </option>
                                     )
                                 })
@@ -126,16 +131,16 @@ const ContactUsFrom = () => {
                             name="phone"
                             id="phone"
                             placeholder="12345 67890"
-                            className="text-black"
+                            className="form-style"
                             {...register("phone",
                                 {
                                     required: { value: true, message: "Please enter Phone Number" },
-                                    maxLength: { value: 10, message: "Invalid Phone Number" },
-                                    minLength: { value: 8, message: "Invalid Phone Number" }
+                                    maxLength: { value: 12, message: "Invalid Phone Number" },
+                                    minLength: { value: 10, message: "Invalid Phone Number" }
                                 })} />
 
                             {errors.phone && (
-                                <span>
+                                <span  className="-mt-1 text-[12px] text-yellow-100">
                                     {errors.phone.message}
                                 </span>
                             )}
@@ -146,24 +151,31 @@ const ContactUsFrom = () => {
             </div>
 
             {/* message */}
-            <div className="flex flex-col gap-1 mb-4">
-                <label htmlFor="message">
+            <div className="flex flex-col gap-2">
+                <label htmlFor="message" className="lable-style">
                     Message
                 </label>
                 <textarea name="message" id="message" cols="30" rows="7" placeholder="Enter Your Message here"
+                    className="form-style"
                     {...register("message", { required: true })}
-                    className="text-black" />
+                    />
                 {
                     errors.message && (
-                        <span>
+                        <span className="-mt-1 text-[12px] text-yellow-100">
                             Please enter your Message
                         </span>
                     )
                 }
             </div>
 
-            <button type="submit"
-                className="rounded-md bg-yellow-50 text-center px=6 text-[16px] font-bold text-black">
+            <button 
+            disabled={loading}
+            type="submit"
+            className={`rounded-md bg-yellow-50 px-6 py-3 text-center text-[13px]
+            font-bold text-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.18)]
+            ${!loading &&
+                "transition-all duration-200 hover:scale-95 hover:shadow-none"}
+                disabled:bg-richblack-500 sm:text-[16px]`}>
                 Send Message
             </button>
 

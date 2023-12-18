@@ -5,71 +5,79 @@ import HighlightText from "../../core/HomePage/HighlightText"
 const data = [
     {
         order: -1,
-        heading: "heading",
-        highlightedText: " abcd",
-        description: "description abcdefgh",
+        heading: "World-Class Learning for",
+        highlightText: "Anyone, Anywhere",
+        description:
+            "Studynotion partners with more than 275+ leading universities and companies to bring flexible, affordable, job-relevant online learning to individuals and organizations worldwide.",
         BtnText: "Learn More",
-        BtnLink: "/"
+        BtnLink: "/",
     },
     {
         order: 1,
-        heading: "heading",
-        description: "description abcdefgh"
+        heading: "Curriculum Based on Industry Needs",
+        description:
+            "Save time and money! The Belajar curriculum is made to be easier to understand and in line with industry needs.",
     },
     {
         order: 2,
-        heading: "heading",
-        description: "description abcdefgh"
+        heading: "Our Learning Methods",
+        description:
+            "Studynotion partners with more than 275+ leading universities and companies to bring",
     },
     {
         order: 3,
-        heading: "heading",
-        description: "description abcdefgh"
+        heading: "Certification",
+        description:
+            "Studynotion partners with more than 275+ leading universities and companies to bring",
     },
     {
         order: 4,
-        heading: "heading",
-        description: "description abcdefgh"
+        heading: `Rating "Auto-grading"`,
+        description:
+            "Studynotion partners with more than 275+ leading universities and companies to bring",
     },
     {
         order: 5,
-        heading: "heading",
-        description: "description abcdefgh"
+        heading: "Ready to Work",
+        description:
+            "Studynotion partners with more than 275+ leading universities and companies to bring",
     },
-]
+];
 
 const LearningGrid = () => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-4 mb-10 p-5 lg:w-fit">
+        <div className="grid mx-auto w-[350px] xl:w-fit grid-cols-1 xl:grid-cols-4 mb-12">
             {
                 data.map((card, index) => {
                     return (
                         <div
                             key={index}
-                            className={`${index===0 && "lg:col-span-2 lg:h-[280px] bg-richblack-900 p-5"}
-                            ${
-                                card.order % 2 === 1 ? "bg-richblack-700 lg:h-[280px] p-5" : "bg-richblack-800 lg:h-[280px] p-5"
-                            }
-                            ${
-                                card.order == 3 && "lg:col-start-2"
-                            }`}>
-                                {
-                                    card.order < 0 
+                            className={`${index === 0 && "xl:col-span-2 xl:h-[294px]"}
+                            ${card.order % 2 === 1
+                                    ? "bg-richblack-700 h-[294px]"
+                                    : card.order % 2 === 0
+                                        ? "bg-richblack-800 h-[294px]"
+                                        : "bg-transparent"
+                                }
+                            ${card.order == 3 && "xl:col-start-2"
+                                }`}>
+                            {
+                                card.order < 0
                                     ?
-                                    (<div className="lg:w-[90%] flex flex-col pb-5 gap-3">
+                                    (<div className="xl:w-[90%] flex flex-col gap-3 pb-10 xl:pb-0">
                                         <div className="text-4xl font-semibold">
                                             {card.heading}
-                                            <HighlightText text={card.highlightedText} />
+                                            <HighlightText text={card.highlightText} />
                                         </div>
-                                        <p className="font-medium">{card.description}</p>
-                                        <div className="w-fit">
+                                        <p className="text-richblack-300 font-medium">{card.description}</p>
+                                        <div className="w-fit mt-2">
                                             <CTAButton active={true} linkto={card.BtnLink}>
                                                 {card.BtnText}
                                             </CTAButton>
                                         </div>
-                                    </div>) 
+                                    </div>)
                                     :
-                                    (<div className="flex flex-col justify-center items-center gap-8 p-7">
+                                    (<div className="p-8 flex flex-col gap-8">
                                         <h1 className="text-richblack-5 text-lg">
                                             {card.heading}
                                         </h1>
@@ -78,7 +86,7 @@ const LearningGrid = () => {
                                         </p>
 
                                     </div>)
-                                }
+                            }
 
                         </div>
                     )
