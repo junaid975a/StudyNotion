@@ -17,7 +17,7 @@ const subLinks = [
         link:"/catalog/python"
     },
     {
-        title: "web dev",
+        title: "web dev course",
         link:"/catalog/web-development"
     },
 ];
@@ -35,7 +35,7 @@ const Navbar = () => {
     const fetchSublinks = async() => {
         try{
             const result = await apiConnector("GET", categories.CATEGORIES_API);
-            console.log("Printing Sublinks result:" , result);
+            console.log("Printing Sublinks result:" , result.data.data);
             setSsubLinks(result.data.data);
         }
         catch(error) {
@@ -45,6 +45,7 @@ const Navbar = () => {
 
 
     useEffect( () => {
+        console.log("Printing Token: ", token)
         fetchSublinks();
     },[] )
 
@@ -87,10 +88,10 @@ const Navbar = () => {
                                 </div>
 
                                 {
-                                    subLinks.length ? (
-                                            subLinks.map( (subLink, index) => (
+                                    ssubLinks.length ? (
+                                            ssubLinks.map( (subLink, index) => (
                                                 <Link to={`${subLink.link}`} key={index}>
-                                                    <p>{subLink.title}</p>
+                                                    <p>{subLink.name}</p>
                                                 </Link>
                                             ) )
                                     ) : (<div></div>)

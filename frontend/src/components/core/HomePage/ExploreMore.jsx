@@ -62,7 +62,7 @@ const ExploreMore = () => {
                 {
                     courses.map((course, index) => {
                         return (
-                            <div>
+                            <div key={index}>
                                 <CourseCard key={index}
                                 cardData={course}
                                 currentCard={currentCard}
