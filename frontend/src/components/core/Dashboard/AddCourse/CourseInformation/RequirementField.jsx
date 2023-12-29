@@ -28,12 +28,12 @@ const RequirementField = ({ name, label, register, errors, setValue, getValues }
         setRequirementList(updatedRequirementList);
     }
     return (
-        <div>
-            <label htmlFor={name}>
-                {label}<sup>*</sup>
+        <div className='flex flex-col space-y-2'>
+            <label className='text-sm text-richblack-5' htmlFor={name}>
+                {label}<sup className='text-pink-200'>*</sup>
             </label>
 
-            <div>
+            <div className='flex  flex-col items-start space-y-2'>
                 <input type="text"
                     id={name}
                     value={requirement}
@@ -49,7 +49,7 @@ const RequirementField = ({ name, label, register, errors, setValue, getValues }
 
             {
                 requirementList.length > 0 && (
-                    <ul>
+                    <ul className='mt-2 list-inside list-disc'>
                         {
                             requirementList.map((requirement, index) => (
                                 <li key={index} className='flex items-center text-richblack-25'>
@@ -59,7 +59,7 @@ const RequirementField = ({ name, label, register, errors, setValue, getValues }
                                     <button
                                         type='button'
                                         onClick={() => handleRemoveRequirement(index)}
-                                        className='text-xs text-pure-greys-300'>clear</button>
+                                        className=' ml-2 text-xs text-pure-greys-300'>clear</button>
 
                                 </li>
                             ))
@@ -69,7 +69,7 @@ const RequirementField = ({ name, label, register, errors, setValue, getValues }
             }
             {
                 errors[name] && (
-                    <span>
+                    <span className='ml-2 text-xs tracking-wide text-pink-200'>
                         {label} is required
                     </span>
                 )
