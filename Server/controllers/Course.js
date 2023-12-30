@@ -2,6 +2,10 @@ const Course = require("../models/Course");
 const Category = require("../models/Category");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const Section = require("../models/Section");
+const SubSection = require("../models/SubSection");
+const CourseProgress = require("../models/CourseProgress");
+const {convertSecondsToDuration} = require("../utils/secToDuration")
 // const Course = require("../models/Course");
 // Function to create a new course
 exports.createCourse = async (req, res) => {
