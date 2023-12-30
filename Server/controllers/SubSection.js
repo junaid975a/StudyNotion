@@ -7,14 +7,14 @@ require("dotenv").config();
 exports.createSubSection = async (req, res) => {
     try {
         // fetch data
-        const { sectionId, title, timeDuration, description } = req.body;
+        const { sectionId, title, description } = req.body;
 
         // extract file/video
-        const video = req.files.videoFile;
+        const video = req.files.video;
 
         // validate data
         // console.log(sectionId, title, timeDuration, description, video);
-        if (!sectionId || !title || !timeDuration || !description || !video) {
+        if (!sectionId || !title || !description || !video) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required",
@@ -27,13 +27,13 @@ exports.createSubSection = async (req, res) => {
         // create subsection
         const subSectionDetails = await SubSection.create({
             title: title,
-            timeDuration: timeDuration,
+            timeDuration:`"${uploadDetails.duration}`,
             description: description,
             videoUrl: uploadDetails.secure_url
         });
 
         // update the subsection in section
-        const updatedSection = await Section.findByIdAndUpdate(sectionId,
+        const updatedSection = await Section.findByIdAndUpdate({_id: sectionId},
             {
                 $push: {
                     subSection: subSectionDetails._id,
@@ -46,7 +46,7 @@ exports.createSubSection = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "SubSection created successfully",
-            updatedSection,
+            data: updatedSection,
         });
 
 
@@ -63,8 +63,8 @@ exports.createSubSection = async (req, res) => {
 // update subsection
 exports.updateSubSection = async (req, res) => {
     try {
-        const { sectionId, title, description } = req.body;
-        const subSection = await SubSection.findById(sectionId);
+        const { sectionId, subSectionId, title, description } = req.body;
+        const subSection = await SubSection.findById(subSectionId);
 
         if (!subSection) {
             return res.status(404).json({
@@ -94,8 +94,11 @@ exports.updateSubSection = async (req, res) => {
 
         await subSection.save();
 
+        const updatedSection = await Section.findById(sectionId).populate("subSection");
+
         return res.status(200).json({
             success: true,
+            data: updatedSection,
             message: "Section updated successfully",
         })
 
@@ -129,8 +132,11 @@ exports.deleteSubSection = async (req, res) => {
                 .json({ success: false, message: "SubSection not found" })
         }
 
+        const updatedSection = await Section.findById(sectionId).populate("subSection");
+
         return res.json({
             success: true,
+            data: updatedSection,
             message: "SubSection deleted successfully",
         })
     } catch (error) {
