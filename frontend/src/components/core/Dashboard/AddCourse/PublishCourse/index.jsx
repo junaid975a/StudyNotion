@@ -8,7 +8,7 @@ import { editCourseDetails } from '../../../../../services/operations/courseDeta
 import { useNavigate } from "react-router-dom"
 
 export const PublishCourse = () => {
-    const { register, handleSubmit, setValue, getValues } = useForm()
+  const { register, handleSubmit, setValue, getValues } = useForm()
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -28,7 +28,7 @@ export const PublishCourse = () => {
 
   const goToCourses = () => {
     dispatch(resetCourseState())
-    // navigate("/dashboard/my-courses")
+    navigate("/dashboard/my-courses")
   }
 
   const handleCoursePublish = async () => {
