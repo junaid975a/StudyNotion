@@ -57,7 +57,7 @@ exports.updateSection = async (req, res) => {
     try {
         // data fetch
         const { sectionName, sectionId, courseId } = req.body;
-
+        
 
         // data validation
         if (!sectionId || !sectionName || !courseId) {

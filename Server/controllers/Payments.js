@@ -57,14 +57,17 @@ exports.capturePayment = async (req, res) => {
         receipt: Math.random(Date.now()).toString(),
     }
 
+    console.log("options tak aaya?", options);
+
     try {
         const paymentResponse = await instance.orders.create(options);
-        res.json({
+        console.log("payment order ka response", paymentResponse);
+        return res.status(200).json({
             success: true,
             message: paymentResponse
         })
     } catch (err) {
-        console.log(err);
+        console.log("payment order me fass gaya??",err);
         return res.status(500).json({
             success: false,
             message: err.message,
@@ -76,14 +79,19 @@ exports.verifySignature = async (req, res) => {
     const razorpay_order_id = req.body?.razorpay_order_id;
     const razorpay_payment_id = req.body?.razorpay_payment_id;
     const razorpay_signature = req.body?.razorpay_signature;
-    const { courses } = re.body?.courses;
+    const  courses  = req.body?.courses;
     const userId = req.user.id;
+    console.log("razorpay ki order_id:", razorpay_order_id);
+    console.log("razorpay ki payment_id:", razorpay_payment_id);
+    console.log("razorpay ki signature:", razorpay_signature);
+    console.log("courses:", courses);
+    console.log("user_id:", userId);
 
     if (!razorpay_order_id ||
         !razorpay_payment_id ||
         !razorpay_signature ||
         !courses || !userId) {
-        return res.status(200).json({
+        return res.status(401).json({
             success: false,
             message: "Payment failed.",
         })
