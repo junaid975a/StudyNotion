@@ -25,6 +25,8 @@ import MyCourses from "./components/core/Dashboard/MyCourses";
 import EditCourse from "./components/core/Dashboard/EditCourse/index";
 import Catalog from "./pages/Catalog"
 import CourseDetails from "./pages/CourseDetails";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails";
+import ViewCourse from "./pages/ViewCourse";
 
 function App() {
 
@@ -121,6 +123,25 @@ function App() {
                 <Route path="dashboard/add-course" element={<AddCourse />} />
                 <Route path="dashboard/my-courses" element={<MyCourses />} />
                 <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
+              </>
+            )
+          }
+
+        </Route>
+
+        <Route element={
+          <PrivateRoute>
+            <ViewCourse />
+          </PrivateRoute>
+        }>
+
+          {
+            user?.accountType === ACCOUNT_TYPE.STUDENT && (
+              <>
+                <Route
+                  path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                  element={<VideoDetails />}
+                />
               </>
             )
           }
