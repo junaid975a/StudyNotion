@@ -16,9 +16,6 @@ exports.uploadImageToCloudinary = async(file, folder, height, quality) => {
         return await cloudinary.uploader.upload(file.tempFilePath, options);
 
     } catch(err) {
-        return res.status(500).json({
-            success: false,
-            message: err.message,
-        });
+        console.log(err);
     }
 }

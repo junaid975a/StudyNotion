@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from 'react';
 import { Player } from 'video-react';
+import 'video-react/dist/video-react.css';
 import { updateCompletedLectures } from '../../../slices/viewCourseSlice';
 import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI";
 import { AiFillPlayCircle } from "react-icons/ai";
@@ -31,12 +32,12 @@ const VideoDetails = () => {
             }
             else {
                 //let's assume k all 3 fields are present
-
+                console.log("Course Section Data printing",courseSectionData);
                 const filteredData = courseSectionData.filter(
                     (course) => course._id === sectionId
                 )
-
-                const filteredVideoData = filteredData?.[0].subsection.filter(
+                console.log("Filtered Data printing",filteredData);
+                const filteredVideoData = filteredData?.[0].subSection.filter(
                     (data) => data._id === subSectionId
                 )
 
@@ -54,7 +55,7 @@ const VideoDetails = () => {
             (data) => data._id === sectionId
         )
 
-        const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSectionId.findIndex(
+        const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex(
             (data) => data._id === subSectionId
         )
         if (currentSectionIndex === 0 && currentSubSectionIndex === 0) {
@@ -72,7 +73,7 @@ const VideoDetails = () => {
 
         const noOfSubSections = courseSectionData[currentSectionIndex].subSection.length;
 
-        const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSectionId.findIndex(
+        const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex(
             (data) => data._id === subSectionId
         )
 
@@ -94,7 +95,7 @@ const VideoDetails = () => {
 
         const noOfSubSections = courseSectionData[currentSectionIndex].subSection.length;
 
-        const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSectionId.findIndex(
+        const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex(
             (data) => data._id === subSectionId
         )
 
@@ -107,7 +108,7 @@ const VideoDetails = () => {
         else {
             //different section ki first video
             const nextSectionId = courseSectionData[currentSectionIndex + 1]._id;
-            const nextSubSectionId = courseSectionData[currentSectionIndex + 1].subsection[0]._id;
+            const nextSubSectionId = courseSectionData[currentSectionIndex + 1].subSection[0]._id;
             ///iss voide par jao 
             navigate(`/view-course/${courseId}/section/${nextSectionId}/sub-section/${nextSubSectionId}`)
         }
@@ -121,13 +122,13 @@ const VideoDetails = () => {
 
         const noOfSubSections = courseSectionData[currentSectionIndex].subSection.length;
 
-        const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSectionId.findIndex(
+        const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex(
             (data) => data._id === subSectionId
         )
 
         if (currentSubSectionIndex != 0) {
             //same section , prev video
-            const prevSubSectionId = courseSectionData[currentSectionIndex].subSection[currentSubSectionIndex - 1];
+            const prevSubSectionId = courseSectionData[currentSectionIndex].subSection[currentSubSectionIndex - 1]._id;
             //iss video par chalge jao
             navigate(`/view-course/${courseId}/section/${sectionId}/sub-section/${prevSubSectionId}`)
         }
@@ -135,7 +136,7 @@ const VideoDetails = () => {
             //different section , last video
             const prevSectionId = courseSectionData[currentSectionIndex - 1]._id;
             const prevSubSectionLength = courseSectionData[currentSectionIndex - 1].subSection.length;
-            const prevSubSectionId = courseSectionData[currentSectionIndex - 1].subsection[prevSubSectionLength - 1]._id;
+            const prevSubSectionId = courseSectionData[currentSectionIndex - 1].subSection[prevSubSectionLength - 1]._id;
             //iss video par chalge jao
             navigate(`/view-course/${courseId}/section/${prevSectionId}/sub-section/${prevSubSectionId}`)
 

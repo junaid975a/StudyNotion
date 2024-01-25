@@ -263,10 +263,9 @@ exports.getCourseDetails = async (req, res) => {
 			});
 		}
 
-		console.log("course details ye mili-->>", courseDetails);
+		
 		let totalDurationInSeconds = 0
 		courseDetails.courseContent.forEach((content) => {
-			console.log("ye wala content hai bhai-->>", content)
 			content.subSection.forEach((subSection) => {
 				const timeDurationInSeconds = parseInt(subSection.timeDuration)
 				totalDurationInSeconds += timeDurationInSeconds
