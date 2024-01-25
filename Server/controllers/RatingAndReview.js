@@ -152,7 +152,7 @@ exports.getAllRating = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: `All ratings collected successfully`,
-            allReviews: allReviews,
+            data: allReviews,
         });
 
     } catch (err) {
