@@ -17,9 +17,9 @@ const CourseSlider = ({ Courses }) => {
                         slidesPerView={1}
                         loop={true}
                         spaceBetween={200}
-     
+
                         modules={[Autoplay, Pagination, Navigation]}
-                        className="mySwiper"
+                        className="max-h-[30rem]"
                         pagination={true}
                         autoplay={{
                             delay: 1000,
@@ -39,7 +39,7 @@ const CourseSlider = ({ Courses }) => {
                         }
                     </Swiper>
                 ) : (
-                    <p>No Course Found</p>
+                    <p className="text-xl text-richblack-5">No Course Found</p>
                 )
 
             }

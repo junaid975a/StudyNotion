@@ -27,14 +27,14 @@ import Catalog from "./pages/Catalog"
 import CourseDetails from "./pages/CourseDetails";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import ViewCourse from "./pages/ViewCourse";
-import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
+import Instructor from "./components/core/Dashboard/Instructor";
 
 function App() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const {user} = useSelector((state) => state.profile)
+  const { user } = useSelector((state) => state.profile)
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
@@ -42,7 +42,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="catalog/:catalogName" element={<Catalog />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
-        
+
         <Route
           path="signup"
           element={
@@ -88,9 +88,9 @@ function App() {
         <Route
           path="/about"
           element={
-            
-              <About />
-            
+
+            <About />
+
           }
         />
 
@@ -102,18 +102,19 @@ function App() {
             <PrivateRoute >
               <Dashboard />
             </PrivateRoute>
-          } >
+          }
+        >
 
           <Route path="dashboard/my-profile"
             element={<MyProfile />} />
           <Route path="dashboard/Settings"
-            element={<Settings />} /> 
+            element={<Settings />} />
 
           {
             user?.accountType === ACCOUNT_TYPE.STUDENT && (
               <>
-                <Route path="dashboard/cart" element={<Cart/>} />
-                <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>} />
+                <Route path="dashboard/cart" element={<Cart />} />
+                <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
               </>
             )
           }
@@ -121,7 +122,7 @@ function App() {
           {
             user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
               <>
-              <Route path="dashboard/instructor" element={<Instructor />} />
+                <Route path="dashboard/instructor" element={<Instructor />} />
                 <Route path="dashboard/add-course" element={<AddCourse />} />
                 <Route path="dashboard/my-courses" element={<MyCourses />} />
                 <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />

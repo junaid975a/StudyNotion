@@ -65,7 +65,8 @@ const RenderSteps = () => {
                         >
 
                             <p
-                                className={`text-sm ${step >= item.id ? "text-richblack-5" : "text-richblack-500"
+                                className={`text-sm ${
+                                    step >= item.id ? "text-richblack-5" : "text-richblack-500"
                                     }`}
                             >
                                 {item.title}

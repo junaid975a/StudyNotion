@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-const { auth } = require("../middlewares/auth");
+const { auth, isInstructor } = require("../middlewares/auth");
 
 const {
     updateProfile,
@@ -10,6 +10,7 @@ const {
     getAllUserDetails,
     updateDisplayPicture,
     getEnrolledCourses,
+    instructorDashboard
 } = require("../controllers/Profile");
 
 router.delete("/deleteProfile", auth, deleteAccount)

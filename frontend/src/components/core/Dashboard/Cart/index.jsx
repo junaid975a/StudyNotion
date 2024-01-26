@@ -5,7 +5,14 @@ import RenderTotalAmount from "./RenderTotalAmount"
 
 export default function Cart() {
   const { total, totalItems } = useSelector((state) => state.cart)
+  const { paymentLoading } = useSelector((state) => state.course)
 
+  if (paymentLoading)
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="spinner"></div>
+      </div>
+    )
   return (
     <>
       <h1 className="mb-14 text-3xl font-medium text-richblack-5">Cart</h1>
