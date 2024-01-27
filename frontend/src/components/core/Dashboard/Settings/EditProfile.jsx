@@ -22,7 +22,6 @@ export default function EditProfile() {
 
     const submitProfileForm = async (data) => {
         try {
-            console.log(data);
             dispatch(updateProfile(token, data))
         } catch (err) {
             console.log("Error message: ", err.message)
@@ -30,33 +29,33 @@ export default function EditProfile() {
     }
 
     return (
-        <div>
-            <form action="" onSubmit={handleSubmit(submitProfileForm)}>
-                {/* profile info */}
+        <>
+            <form onSubmit={handleSubmit(submitProfileForm)}>
+                {/* Profile Information */}
                 <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
                     <h2 className="text-lg font-semibold text-richblack-5">
                         Profile Information
                     </h2>
-
                     <div className="flex flex-col gap-5 lg:flex-row">
                         <div className="flex flex-col gap-2 lg:w-[48%]">
                             <label htmlFor="firstName" className="lable-style">
                                 First Name
                             </label>
-                            <input type="text"
+                            <input
+                                type="text"
                                 name="firstName"
                                 id="firstName"
-                                placeholder="Enter First Name"
+                                placeholder="Enter first name"
                                 className="form-style"
                                 {...register("firstName", { required: true })}
-                                defaultValue={user?.firstName} />
+                                defaultValue={user?.firstName}
+                            />
                             {errors.firstName && (
-                                <span>
+                                <span className="-mt-1 text-[12px] text-yellow-100">
                                     Please enter your first name.
                                 </span>
                             )}
                         </div>
-
                         <div className="flex flex-col gap-2 lg:w-[48%]">
                             <label htmlFor="lastName" className="lable-style">
                                 Last Name
@@ -195,6 +194,6 @@ export default function EditProfile() {
                     <IconBtn type="submit" text="Save" />
                 </div>
             </form>
-        </div>
+        </>
     )
 }

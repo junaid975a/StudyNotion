@@ -162,7 +162,9 @@ const enrollStudent = async (courses, userId, res) => {
             const emailResponse = await mailSender(
                 enrollStudent.email,
                 `Successfully enrolled into ${enrolledCourse.courseName}`,
-                courseEnrollmentEmail(enrolledCourse.courseName, `${enrolledStudent.firstName} ${enrolledStudent.lastName}`)
+                courseEnrollmentEmail(
+                    enrolledCourse.courseName, 
+                    `${enrolledStudent.firstName} ${enrolledStudent.lastName}`)
             )
 
         } catch (err) {

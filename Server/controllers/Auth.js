@@ -4,7 +4,7 @@ const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mailSender = require("../utils/mailSender");
-const { passwordUpdate } = require("../mail/templates/passwordUpdate");
+const { passwordUpdated } = require("../mail/templates/passwordUpdate");
 const Profile = require("../models/Profile");
 require("dotenv").config();
 
@@ -137,6 +137,10 @@ exports.signUp = async (req, res) => {
         // hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // Create the user
+        let approved = ""
+        approved === "Instructor" ? (approved = false) : (approved = true)
+
         // create user
         const profileDetails = await Profile.create({
             gender: null,
@@ -152,8 +156,9 @@ exports.signUp = async (req, res) => {
             contactNumber,
             password: hashedPassword,
             accountType: accountType,
+            approved: approved,
             additionalDetails: profileDetails._id,
-            image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+            image: "",
         })
 
         // return res
@@ -188,7 +193,7 @@ exports.login = async (req, res) => {
         }
 
         // check user
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate("additionalDetails");
 
         // if user exists already, return a response
         if (!user) {
@@ -225,7 +230,6 @@ exports.login = async (req, res) => {
                 message: "User Login sucessfully",
             });
         } else {
-            console.log(err);
             return res.status(400).json({
                 success: false,
                 message: "Password incorrect",
@@ -249,7 +253,7 @@ exports.changePassword = async (req, res) => {
     try {
         // get current user details from request
         const userDetails = await User.findById(req.user.id);
-        const { oldPassword, newPassword, confirmNewPassword } = req.body;
+        const { oldPassword, newPassword } = req.body;
 
         // validate old password
         const isPasswordMatch = await bcrypt.compare(oldPassword, userDetails.password);
@@ -261,13 +265,6 @@ exports.changePassword = async (req, res) => {
             });
         }
 
-        // compare new passwords.
-        if (newPassword !== confirmNewPassword) {
-            return res.status(400).json({
-                success: false,
-                message: "New password and confirm new password do not match.",
-            });
-        }
 
         const encryptedPassword = await bcrypt.hash(newPassword, 10);
         const updatedUserDetails = await User.findByIdAndUpdate(
@@ -279,7 +276,8 @@ exports.changePassword = async (req, res) => {
         try {
             const emailResponse = await mailSender(
                 updatedUserDetails.email,
-                passwordUpdate(
+                "Password for your account has been updated",
+                passwordUpdated(
                     updatedUserDetails.email,
                     `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
                 )
@@ -287,7 +285,7 @@ exports.changePassword = async (req, res) => {
             console.log("Email sent successfully:", emailResponse.response);
         } catch (err) {
             // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
-            console.error("Error occurred while sending email:", error);
+            console.error("Error occurred while sending email:", err);
             return res.status(500).json({
                 success: false,
                 message: "Error occurred while sending email",
@@ -302,7 +300,7 @@ exports.changePassword = async (req, res) => {
 
     } catch (err) {
         // If there's an error updating the password, log the error and return a 500 (Internal Server Error) error
-        console.error("Error occurred while updating password:", error);
+        console.error("Error occurred while updating password:", err);
         return res.status(500).json({
             success: false,
             message: "Error occurred while updating password",

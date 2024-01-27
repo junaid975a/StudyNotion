@@ -3,39 +3,39 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import { changePassword } from "../../../../services/operations/SettingsAPI";
-import {AiOutlineEyeInvisible, AiOutlineEye} from "react-icons/ai"
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai"
 import IconBtn from "../../../common/IconBtn";
 
 
 export default function UpdatePassword() {
-    const {token} = useSelector((state) => state.auth);
-    const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
 
-    const [showOldPassword, setShowOldPassword] = useState(false);
-    const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
 
-    const {
-        register,
-        handleSubmit,
-        formState: {errors},
-    } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
 
 
-    const submitPasswordForm = async(data) => {
-        try {
-            await changePassword(token, data);
-        } catch(err) {
-            console.log("error message: ", err.message);
-        }
+  const submitPasswordForm = async (data) => {
+    try {
+      await changePassword(token, data);
+    } catch (err) {
+      console.log("error message: ", err.message);
     }
+  }
 
 
-    return (
-        <div>
+  return (
+    <div>
 
-<form onSubmit={handleSubmit(submitPasswordForm)}>
+      <form onSubmit={handleSubmit(submitPasswordForm)}>
         <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
           <h2 className="text-lg font-semibold text-richblack-5">Password</h2>
           <div className="flex flex-col gap-5 lg:flex-row">
@@ -111,6 +111,6 @@ export default function UpdatePassword() {
       </form>
 
 
-        </div>
-    )
+    </div>
+  )
 }

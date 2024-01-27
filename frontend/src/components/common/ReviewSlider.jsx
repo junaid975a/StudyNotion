@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 import "swiper/css/free-mode"
 import "swiper/css/pagination"
-import "../../App.css"
 import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules'
 import ReactStars from "react-rating-stars-component";
 import { apiConnector } from "../../services/apiconnector";
@@ -28,7 +27,7 @@ const ReviewSlider = () => {
         fetchAllReviews();
     }, []);
     return (
-        <div className='text-white w-[90%]'>
+        <div className='text-white w-full'>
             <div className='my-[50px] h-[184px] max-w-maxContentTab lg:max-w-maxContent'>
                 <Swiper
                     slidesPerView={4}

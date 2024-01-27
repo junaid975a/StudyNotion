@@ -47,7 +47,7 @@ exports.resetPasswordToken = async(req, res) => {
     } catch(err) {
         console.log(err)
         return res.status(500).json({
-            error: error.message,
+            error: err.message,
 			success: false,
 			message: `Some Error in Sending the Reset Message`,
         });

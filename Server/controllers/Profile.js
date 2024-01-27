@@ -8,35 +8,53 @@ const Course = require("../models/Course");
 exports.updateProfile = async (req, res) => {
   try {
     // get details
-    const { dateOfBirth = "", about = "", contactNumber } = req.body;
+    const {
+      firstName = "",
+      lastName = "",
+      dateOfBirth = "",
+      about = "",
+      contactNumber = "",
+      gender = "",
+    } = req.body;
     const id = req.user.id;
 
-    // validate
-    if (!contactNumber || !id) {
+    if(!firstName || !lastName || !dateOfBirth || !about || !contactNumber || !gender) {
       return res.status(400).json({
         success: false,
-        message: "All Fields are required",
-        error: err.message,
-      });
+        message: "fields are unavailable",
+      })
     }
 
-    // get profile details
-    const userDetails = await User.findById(id);
-    const profileId = userDetails.additionalDetails;
-    const profileDetails = await Profile.findById(profileId);
+    // Find the profile by id
+    const userDetails = await User.findById(id)
+    const profile = await Profile.findById(userDetails.additionalDetails)
 
-    // update profile 
-    profileDetails.dateOfBirth = dateOfBirth;
-    profileDetails.about = about;
-    profileDetails.contactNumber = contactNumber;
+    const user = await User.findByIdAndUpdate(id, {
+      firstName,
+      lastName,
+    })
+    await user.save()
 
-    await profileDetails.save();
+
+    // Update the profile fields
+    profile.dateOfBirth = dateOfBirth
+    profile.about = about
+    profile.contactNumber = contactNumber
+    profile.gender = gender
+
+    // Save the updated profile
+    await profile.save()
+
+    // Find the updated user details
+    const updatedUserDetails = await User.findById(id)
+      .populate("additionalDetails")
+      .exec()
 
     // return res
     return res.status(200).json({
       success: true,
       message: "Profile updated successfully",
-      profileDetails,
+      updatedUserDetails,
     });
   } catch (err) {
     return res.status(500).json({
@@ -54,7 +72,8 @@ exports.deleteAccount = async (req, res) => {
     const id = req.user.id;
 
     // validation
-    const user = await User.findById(id);
+    const user = await User.findById({ _id: id });
+    
     if (!user) {
       return res.status(400).json({
         success: false,
@@ -62,21 +81,29 @@ exports.deleteAccount = async (req, res) => {
         error: err.message,
       });
     }
+    console.log("user additionalDetails---------->", user.additionalDetails);
 
-    // delete profile
-    const profileId = user.additionalDetails;
-    await Profile.findByIdAndDelete({ _id: profileId });
+    // Delete Assosiated Profile with the User
+    await Profile.findByIdAndDelete({
+      _id: user.additionalDetails,
+    });
 
-    // delete user
-    await User.findByIdAndDelete({ _id: id });
 
-    // HW: unenroll user from all enrolled courses.
-
-    // return res
-    return res.status(200).json({
+    
+    for (const courseId of user.courses) {
+      await Course.findByIdAndUpdate(
+        courseId,
+        { $pull: { studentsEnrolled: id } },
+        { new: true }
+      )
+    }
+    // Now Delete User
+    await User.findByIdAndDelete({ _id: id })
+    res.status(200).json({
       success: true,
       message: "User deleted successfully",
-    });
+    })
+    await CourseProgress.deleteMany({ userId: id })
   } catch (err) {
     return res.status(500).json({
       success: false,

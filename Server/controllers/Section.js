@@ -70,8 +70,10 @@ exports.updateSection = async (req, res) => {
 
 
         // update data
-        const updatedSection = await Section.findByIdAndUpdate(sectionId,
-            { sectionName }, { new: true });
+        const updatedSection = await Section.findByIdAndUpdate(
+            sectionId,
+            { sectionName }, 
+            { new: true });
 
         const course = await Course.findById(courseId)
             .populate({

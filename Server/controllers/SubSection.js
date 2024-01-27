@@ -22,7 +22,8 @@ exports.createSubSection = async (req, res) => {
         }
 
         // upload video to cloudinary
-        const uploadDetails = await uploadImageToCloudinary(video, process.env.FOLDER_NAME);
+        const uploadDetails = await uploadImageToCloudinary(
+            video, process.env.FOLDER_NAME);
 
         // create subsection
         const subSectionDetails = await SubSection.create({
@@ -33,7 +34,8 @@ exports.createSubSection = async (req, res) => {
         });
 
         // update the subsection in section
-        const updatedSection = await Section.findByIdAndUpdate({_id: sectionId},
+        const updatedSection = await Section.findByIdAndUpdate(
+            {_id: sectionId},
             {
                 $push: {
                     subSection: subSectionDetails._id,
@@ -94,7 +96,8 @@ exports.updateSubSection = async (req, res) => {
 
         await subSection.save();
 
-        const updatedSection = await Section.findById(sectionId).populate("subSection");
+        const updatedSection = await Section.findById(sectionId)
+        .populate("subSection");
 
         return res.status(200).json({
             success: true,

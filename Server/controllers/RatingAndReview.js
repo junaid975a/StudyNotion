@@ -109,7 +109,7 @@ exports.getAverageRating = async (req, res) => {
 
 
         // return rating
-        if (resultlength > 0) {
+        if (result.length > 0) {
             return res.status(200).json({
                 success: true,
                 averageRating: result[0].averageRating,
