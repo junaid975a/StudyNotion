@@ -254,12 +254,20 @@ exports.getCourseDetails = async (req, res) => {
 			  },
 			})
 			.exec()
-
+		
+		// console.log("courseDetails--------->",courseDetails.instructor);
 		//validation
 		if (!courseDetails) {
 			return res.status(400).json({
 				success: false,
 				message: `Could not find the course with ${courseId}`,
+			});
+		}
+
+		if (!courseDetails.instructor) {
+			return res.status(400).json({
+				success: false,
+				message: `Instructor deleted`,
 			});
 		}
 
